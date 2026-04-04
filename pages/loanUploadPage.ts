@@ -1,6 +1,6 @@
 /**
  * Loan Upload Page Object
- * Handles all interactions with the loan upload page
+ * Handles all interactions with the loan upload page and real TPO flow
  */
 
 import { Page, Locator } from '@playwright/test';
@@ -24,7 +24,6 @@ export class LoanUploadPage extends BasePage {
   constructor(page: Page) {
     super(page);
 
-    // Initialize locators in constructor for performance
     this.uploadPageContainer = this.getByTestId('upload-page-container');
     this.fileInput = this.getByTestId('file-input');
     this.dropZone = this.getByTestId('drop-zone');
@@ -39,159 +38,111 @@ export class LoanUploadPage extends BasePage {
     this.loanStatusField = this.getByTestId('loan-status');
   }
 
-  /**
-   * Navigate to the loan upload page
-   * @param baseUrl - Base URL of the application
-   */
+  /** Navigate to the loan upload page */
   async navigateToUploadPage(baseUrl: string): Promise<void> {
     await this.goto(`${baseUrl}/loans/upload`);
     await this.waitForPageLoad();
     await this.waitForVisible(this.uploadPageContainer);
   }
 
-  /**
-   * Upload a file using the file input
-   * @param filePath - Absolute path to the file
-   */
+  /** Upload a file using the file input */
   async uploadFile(filePath: string): Promise<void> {
     await this.fileInput.setInputFiles(filePath);
-    // Wait for file name to appear
     await this.waitForVisible(this.selectedFileName);
   }
 
-  /**
-   * Upload a file using drag and drop
-   * @param filePath - Absolute path to the file
-   */
-  async uploadFileByDragDrop(filePath: string): Promise<void> {
-    // Create a DataTransfer object with the file
-    const buffer = await this.page.evaluate(async (path) => {
-      const response = await fetch(path);
-      const arrayBuffer = await response.arrayBuffer();
-      return Array.from(new Uint8Array(arrayBuffer));
-    }, filePath);
-
-    await this.dropZone.dispatchEvent('drop', {
-      dataTransfer: {
-        files: [
-          {
-            name: filePath.split('/').pop(),
-            type: 'text/xml',
-          },
-        ],
-      },
-    });
-
-    await this.waitForVisible(this.selectedFileName);
-  }
-
-  /**
-   * Get the selected file name
-   * @returns Selected file name or empty string
-   */
+  /** Get the selected file name */
   async getSelectedFileName(): Promise<string> {
     return await this.getTextContent(this.selectedFileName);
   }
 
-  /**
-   * Clear the selected file
-   */
+  /** Clear the selected file */
   async clearFile(): Promise<void> {
     await this.clearFileButton.click();
   }
 
-  /**
-   * Check if submit button is enabled
-   * @returns true if enabled, false if disabled
-   */
+  /** Check if submit button is enabled */
   async isSubmitButtonEnabled(): Promise<boolean> {
     return await this.submitButton.isEnabled();
   }
 
-  /**
-   * Submit the loan form
-   * Waits for loading spinner to appear and then disappear
-   */
+  /** Submit the loan form */
   async submitLoan(): Promise<void> {
     await this.submitButton.click();
-
-    // Wait for loading spinner to appear
     await this.waitForVisible(this.loadingSpinner, 5000);
-
-    // Wait for loading spinner to disappear (30s timeout for upload processing)
     await this.loadingSpinner.waitFor({ state: 'hidden', timeout: 30000 });
   }
 
-  /**
-   * Wait for navigation to loan details page
-   * @param timeout - Optional timeout in milliseconds
-   */
+  /** Wait for navigation to loan details page */
   async waitForNavigationToLoanDetails(timeout: number = 10000): Promise<void> {
     await this.page.waitForURL(/\/loans\/\d+/, { timeout });
   }
 
-  /**
-   * Get success message text
-   * @returns Success message or empty string
-   */
+  /** Get success message text */
   async getSuccessMessage(): Promise<string> {
     return await this.getTextContent(this.successMessage);
   }
 
-  /**
-   * Get error message text
-   * @returns Error message or empty string
-   */
+  /** Get error message text */
   async getErrorMessage(): Promise<string> {
     return await this.getTextContent(this.errorMessage);
   }
 
-  /**
-   * Check if success message is visible
-   * @returns true if visible, false otherwise
-   */
+  /** Check if success message is visible */
   async isSuccessMessageVisible(): Promise<boolean> {
     return await this.isVisible(this.successMessage);
   }
 
-  /**
-   * Check if error message is visible
-   * @returns true if visible, false otherwise
-   */
+  /** Check if error message is visible */
   async isErrorMessageVisible(): Promise<boolean> {
     return await this.isVisible(this.errorMessage);
   }
 
-  /**
-   * Get displayed loan amount
-   * @returns Loan amount text or empty string
-   */
+  /** Get displayed loan amount */
   async getLoanAmount(): Promise<string> {
     return await this.getTextContent(this.loanAmountField);
   }
 
-  /**
-   * Get displayed borrower name
-   * @returns Borrower name text or empty string
-   */
+  /** Get displayed borrower name */
   async getBorrowerName(): Promise<string> {
     return await this.getTextContent(this.borrowerNameField);
   }
 
-  /**
-   * Get displayed loan status
-   * @returns Loan status text or empty string
-   */
+  /** Get displayed loan status */
   async getLoanStatus(): Promise<string> {
     return await this.getTextContent(this.loanStatusField);
   }
 
-  /**
-   * Convenience method: Upload file and submit in one action
-   * @param filePath - Absolute path to the file
-   */
-  async uploadAndSubmit(filePath: string): Promise<void> {
+  /** Select Loan Officer & Processor if missing */
+  async selectLoanOfficerIfMissing(): Promise<void> {
+    const officerVisible = await this.page.locator('[data-testid="loan-officer"]').isVisible();
+    if (!officerVisible) {
+      await this.page.getByLabel(/loan officer/i).click();
+      await this.page.getByText(/first/i).click();
+      await this.page.getByLabel(/loan processor/i).click();
+      await this.page.getByText(/first/i).click();
+    }
+  }
+
+  /** Click "Create Loan" and wait for success messages */
+  async createLoan(): Promise<void> {
+    await this.page.getByRole('button', { name: /create loan/i }).click();
+    await this.page.waitForSelector('text=Loan .* created', { timeout: 15000 });
+    await this.page.waitForSelector('text=synced to encompass', { timeout: 15000 });
+  }
+
+  /** Navigate through multiple tabs by name */
+  async navigateTabs(...tabs: string[]): Promise<void> {
+    for (const tab of tabs) {
+      await this.page.getByRole('tab', { name: new RegExp(tab, 'i') }).click();
+    }
+  }
+
+  /** Full loan upload workflow: upload, officer selection, submit, create loan */
+  async fullLoanUploadFlow(filePath: string): Promise<void> {
     await this.uploadFile(filePath);
+    await this.selectLoanOfficerIfMissing();
     await this.submitLoan();
+    await this.createLoan();
   }
 }

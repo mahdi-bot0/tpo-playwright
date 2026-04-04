@@ -1,13 +1,13 @@
-const { defineConfig, devices } = require('@playwright/test');
+// playwright.config.mjs
+import { defineConfig, devices } from '@playwright/test';
 
-module.exports = defineConfig({
+export default defineConfig({
   testDir: './tests',
   timeout: 60000,
   expect: { timeout: 5000 },
   fullyParallel: true,
   retries: 1,
   reporter: [['list'], ['html', { open: 'never' }]],
-  globalSetup: require.resolve('./global-setup.ts'),
   projects: [
     {
       name: 'chromium',
@@ -21,6 +21,10 @@ module.exports = defineConfig({
   use: {
     headless: false,
     screenshot: 'only-on-failure',
-    video: 'retain-on-failure'
+    video: 'retain-on-failure',
+    baseURL: 'https://button-los-dev.titanbanking.ai/', // ✅ move inside use
+    launchOptions: {
+      slowMo: 1000 // slows each action by 1 second
+    }
   }
 });

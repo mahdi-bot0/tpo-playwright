@@ -3,7 +3,7 @@ import { Page } from '@playwright/test';
 export class LoginPage {
   constructor(private page: Page) {}
 
-  async login(email: string, password: string, baseUrl: string) {
+    async login(email: string, password: string, baseUrl: string) {
     await this.page.goto(baseUrl);
 
     await this.page.getByLabel(/email/i).fill(email);
@@ -11,7 +11,6 @@ export class LoginPage {
 
     await this.page.getByRole('button', { name: /login/i }).click();
 
-    // Wait for navigation after login
-    await this.page.waitForLoadState('networkidle');
-  }
+    await this.page.getByRole('button', { name: /add new loan/i }).waitFor();
+    }
 }
