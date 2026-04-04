@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MESSAGE>
+  <DEAL_SETS>
+    <DEAL_SET>
+      <DEALS>
+        <DEAL>
+          <LOANS>
+            <LOAN LoanAmount="425000" LoanStatus="Approved">
+              <LOAN_IDENTIFIERS>
+                <LOAN_IDENTIFIER>
+                  <LoanIdentifier>LOAN-67890</LoanIdentifier>
+                </LOAN_IDENTIFIER>
+              </LOAN_IDENTIFIERS>
+            </LOAN>
+          </LOANS>
+          <PARTIES>
+            <PARTY>
+              <INDIVIDUAL>
+                <NAME>
+                  <FirstName>Robert</FirstName>
+                  <MiddleName>James</MiddleName>
+                  <LastName>Johnson</LastName>
+                </NAME>
+              </INDIVIDUAL>
+              <ROLES>
+                <ROLE>
+                  <RoleType>Borrower</RoleType>
+                </ROLE>
+              </ROLES>
+            </PARTY>
+          </PARTIES>
+        </DEAL>
+      </DEALS>
+    </DEAL_SET>
+  </DEAL_SETS>
+</MESSAGE>

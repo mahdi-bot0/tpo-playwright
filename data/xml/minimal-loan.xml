@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MESSAGE>
+  <DEAL_SETS>
+    <DEAL_SET>
+      <DEALS>
+        <DEAL>
+          <LOANS>
+            <LOAN LoanAmount="250000">
+              <!-- No LoanStatus - should default to "Draft" -->
+            </LOAN>
+          </LOANS>
+          <PARTIES>
+            <PARTY>
+              <INDIVIDUAL>
+                <NAME>
+                  <FirstName>Jane</FirstName>
+                  <LastName>Smith</LastName>
+                </NAME>
+              </INDIVIDUAL>
+              <ROLES>
+                <ROLE>
+                  <RoleType>Borrower</RoleType>
+                </ROLE>
+              </ROLES>
+            </PARTY>
+          </PARTIES>
+        </DEAL>
+      </DEALS>
+    </DEAL_SET>
+  </DEAL_SETS>
+</MESSAGE>

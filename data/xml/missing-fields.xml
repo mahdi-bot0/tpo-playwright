@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MESSAGE>
+  <DEAL_SETS>
+    <DEAL_SET>
+      <DEALS>
+        <DEAL>
+          <LOANS>
+            <!-- Missing LoanAmount attribute - required field -->
+            <LOAN LoanStatus="Submitted">
+              <LOAN_IDENTIFIERS>
+                <LOAN_IDENTIFIER>
+                  <LoanIdentifier>LOAN-MISSING</LoanIdentifier>
+                </LOAN_IDENTIFIER>
+              </LOAN_IDENTIFIERS>
+            </LOAN>
+          </LOANS>
+          <PARTIES>
+            <PARTY>
+              <INDIVIDUAL>
+                <NAME>
+                  <FirstName>Missing</FirstName>
+                  <LastName>Fields</LastName>
+                </NAME>
+              </INDIVIDUAL>
+              <ROLES>
+                <ROLE>
+                  <RoleType>Borrower</RoleType>
+                </ROLE>
+              </ROLES>
+            </PARTY>
+          </PARTIES>
+        </DEAL>
+      </DEALS>
+    </DEAL_SET>
+  </DEAL_SETS>
+</MESSAGE>

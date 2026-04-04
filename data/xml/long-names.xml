@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MESSAGE>
+  <DEAL_SETS>
+    <DEAL_SET>
+      <DEALS>
+        <DEAL>
+          <LOANS>
+            <LOAN LoanAmount="300000" LoanStatus="Submitted">
+              <LOAN_IDENTIFIERS>
+                <LOAN_IDENTIFIER>
+                  <LoanIdentifier>LOAN-LONG</LoanIdentifier>
+                </LOAN_IDENTIFIER>
+              </LOAN_IDENTIFIERS>
+            </LOAN>
+          </LOANS>
+          <PARTIES>
+            <PARTY>
+              <INDIVIDUAL>
+                <NAME>
+                  <FirstName>Bartholomew-Alexander-Christopher</FirstName>
+                  <MiddleName>Montgomery-Wellington-Fitzpatrick</MiddleName>
+                  <LastName>Pemberton-Smythe-Worthington-III</LastName>
+                </NAME>
+              </INDIVIDUAL>
+              <ROLES>
+                <ROLE>
+                  <RoleType>Borrower</RoleType>
+                </ROLE>
+              </ROLES>
+            </PARTY>
+          </PARTIES>
+        </DEAL>
+      </DEALS>
+    </DEAL_SET>
+  </DEAL_SETS>
+</MESSAGE>

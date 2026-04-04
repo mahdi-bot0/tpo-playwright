@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MESSAGE>
+  <DEAL_SETS>
+    <DEAL_SET>
+      <DEALS>
+        <DEAL>
+          <LOANS>
+            <LOAN LoanAmount="350000" LoanStatus="Submitted">
+              <!-- Missing closing tag to make it invalid -->
+              <LOAN_IDENTIFIERS>
+                <LOAN_IDENTIFIER>
+                  <LoanIdentifier>LOAN-INVALID</LoanIdentifier>
+                <!-- Missing closing LOAN_IDENTIFIER tag -->
+              </LOAN_IDENTIFIERS>
+            </LOAN>
+          </LOANS>
+          <PARTIES>
+            <PARTY>
+              <INDIVIDUAL>
+                <NAME>
+                  <FirstName>Invalid</FirstName>
+                  <LastName>Structure</LastName>
+                </NAME>
+              </INDIVIDUAL>
+            <!-- Missing closing PARTY tag -->
+          </PARTIES>
+        </DEAL>
+      </DEALS>
+    </DEAL_SET>
+  <!-- Missing closing DEAL_SETS and MESSAGE tags -->

@@ -1,0 +1,3 @@
+This is not an XML file.
+It's just plain text content.
+It should trigger a format validation error.
