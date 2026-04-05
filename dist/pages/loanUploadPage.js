@@ -170,4 +170,4 @@ export class LoanUploadPage extends BasePage {
         await this.submitLoan();
     }
 }
-//# sourceMappingURL=loanUploadPage.js.map
+//# sourceMappingURL=loanUploadPage.ts.map

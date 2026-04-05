@@ -6,7 +6,7 @@
 import { test, expect } from '@playwright/test';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import { LoanUploadPage } from '../pages/loanUploadPage.js';
+import { LoanUploadPage } from '../pages/loanUploadPage.ts';
 import { parseMismoXml, formatCurrency } from '../utils/xmlValidator.js';
 import { setupMockServer } from './test-helpers.js';
 

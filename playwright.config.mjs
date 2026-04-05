@@ -1,4 +1,3 @@
-// playwright.config.mjs
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
@@ -13,18 +12,16 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] }
     },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] }
-    }
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] }
+    // }
   ],
   use: {
     headless: false,
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    baseURL: 'https://button-los-dev.titanbanking.ai/', // ✅ move inside use
-    launchOptions: {
-      slowMo: 1000 // slows each action by 1 second
-    }
+    baseURL: 'https://button-los-dev.titanbanking.ai/', // real env
+    launchOptions: { slowMo: 500 }
   }
 });

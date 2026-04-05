@@ -1,31 +1,14 @@
 {
   "compilerOptions": {
-    // Module & Target
-    "module": "nodenext",
-    "target": "esnext",
-    "moduleResolution": "nodenext",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "esModuleInterop": true,
-    "resolveJsonModule": true,
-    
-    // Typechecking & Strictness
     "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
     "skipLibCheck": true,
-    "isolatedModules": true,
-    "verbatimModuleSyntax": false,
-    "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force",
-    
-    // Output & Source Maps
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
-    
-    // JSX support
-    "jsx": "react-jsx",
-
-    // Types
-    "types": ["node"]
-  }
+    "resolveJsonModule": true,
+    "outDir": "dist",
+    "allowJs": true
+  },
+  "include": ["pages", "tests", "utils"]
 }

@@ -9,8 +9,8 @@
 import { test, expect } from '@playwright/test';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import { LoanUploadPage } from '../../pages/loanUploadPage.js';
-import { parseMismoXml, formatCurrency } from '../../utils/xmlValidator.js';
+import { LoanUploadPage } from '../pages/loanUploadPage.ts';
+import { parseMismoXml, formatCurrency } from '../utils/xmlValidator.js';
 
 // Get current directory for ESM
 const __filename = fileURLToPath(import.meta.url);

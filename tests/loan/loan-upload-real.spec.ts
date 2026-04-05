@@ -1,11 +1,9 @@
-// tests/loan/loan-upload-real.spec.ts
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../pages/loginPage.js';
-import { LoanUploadPage } from '../../pages/loanUploadPage.js';
-import { parseMismoXml, formatCurrency } from '../../utils/xmlValidator.js';
+import { LoginPage } from '../../pages/loginPage';
+import { LoanUploadPage } from '../../pages/loanUploadPage';
+import { parseMismoXml, formatCurrency } from '../../utils/xmlValidator';
 import path from 'path';
 
-// Helper to get fixture path
 function getFixturePath(filename: string) {
   return path.join(process.cwd(), 'data', 'xml', filename);
 }
@@ -20,23 +18,22 @@ test.describe('TPO MISMO Loan Upload - Real Flow', () => {
   });
 
   test('Full loan upload and verification', async ({ page }) => {
-    const xmlPath = getFixturePath('valid-loan.xml');
+    const xmlFile = 'TEST-TPO-TI-010 Pricing.xml';
+    const xmlPath = getFixturePath(xmlFile);
 
-    // 1️⃣ Login
+    // Login
     await loginPage.login('demo@titanbanking.ai', 'Summer2025!');
 
-    // 2️⃣ Perform full loan upload flow
-    await loanUploadPage.fullLoanUploadFlow(xmlPath);
+    // Upload loan
+    await loanUploadPage.fullLoanUploadFlow(xmlFile);
 
-    // 3️⃣ Navigate through important tabs
+    // Navigate tabs and verify
     await loanUploadPage.navigateTabs('Loan Details', 'Borrower', 'Pricing');
 
-    // 4️⃣ Validate loan data matches XML
     const expectedData = await parseMismoXml(xmlPath);
 
     const displayedAmount = await loanUploadPage.getLoanAmount();
-    const expectedAmount = formatCurrency(expectedData.loanAmount);
-    expect(displayedAmount).toBe(expectedAmount);
+    expect(displayedAmount).toBe(formatCurrency(expectedData.loanAmount));
 
     const displayedBorrower = await loanUploadPage.getBorrowerName();
     expect(displayedBorrower).toBe(expectedData.borrower.fullName);
